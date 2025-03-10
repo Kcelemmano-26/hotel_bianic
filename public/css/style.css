@@ -1,0 +1,130 @@
+/* Style général du header */
+.header {
+    background: white;
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background 0.3s;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.logo span {
+    color: blue;
+}
+
+/* Navigation */
+.nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav ul li {
+    display: inline;
+}
+
+.nav ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.nav ul li a:hover {
+    color: blue;
+}
+
+/* Bouton de réservation */
+.nav .btn {
+    background: blue;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.nav .btn:hover {
+    background: white;
+}
+
+/* Menu burger pour mobile */
+.burger {
+    display: none;
+    font-size: 30px;
+    color: black;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 15px 0;
+    }
+
+    .nav ul {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .nav ul li {
+        padding: 10px 0;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    .nav.active {
+        display: flex;
+    }
+}
+
+ /* Bannière  */
+.banniere {
+    padding: 10px;
+}
+
+.button--less, .button--more {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+.hideshow__content {
+    transition: all 0.3s ease;
+}
+.hideshow__content[aria-hidden="false"] {
+    max-height: 500px;
+}
+.hideshow__content[aria-hidden="true"] {
+    max-height: 0;
+    overflow: hidden;
+}
