@@ -6,6 +6,11 @@
   <title>Bianic Hotel - Gallery</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
   <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
   <style>
     /* Pour éviter un écart par défaut entre les colonnes */
     .no-gap {
@@ -20,37 +25,42 @@
   </style>
 </head>
 <body class="bg-gray-100">
-  <header id="header" class="top-0 w-full bg-green shadow-md">
-    <div class="container mx-auto flex items-center justify-between p-4">
-      <a href="{{ route('home') }}" class="text-2xl font-bold text-gray-900">
-        Hôtel <span class="text-blue-600">Bianic</span>
-      </a>
-      <nav id="navbar" class="hidden md:flex space-x-6">
-        <a href="index.html" class="hover:text-blue-500">Home</a>
-        <a href="about.html" class="hover:text-blue-500">Chambre</a>
-        <div class="relative group">
-          <a href="#" class="text-blue-500 flex items-center">Gallery <i class="bi bi-chevron-down ml-1"></i></a>
-          <ul class="absolute hidden group-hover:block bg-white shadow-md mt-2 w-40">
-            <li><a href="gallery.html" class="block px-4 py-2 hover:bg-gray-200">Chambres</a></li>
-            <li><a href="gallery.html" class="block px-4 py-2 hover:bg-gray-200">Détente</a></li>
-            <li><a href="gallery.html" class="block px-4 py-2 hover:bg-gray-200">Piscine</a></li>
-            <li><a href="gallery.html" class="block px-4 py-2 hover:bg-gray-200">Vidéos</a></li>
-          </ul>
+<header class="bg-white shadow-md py-4 fixed w-full z-50">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <!-- Logo -->
+            <a href="{{ route('home') }}" class="text-2xl font-bold text-gray-900">
+                <img src="{{ asset('images/logo.jpeg') }}" alt="Hôtel Bianic" class="h-12">
+            </a>
+
+            <!-- Menu de navigation (Desktop) -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="{{ route('home') }}" class="py-2 text-gray-700 hover:text-blue-600">Accueil</a>
+                <a href="{{ route('chambre') }}" class="py-2 text-gray-700 hover:text-blue-600">Chambres</a>
+                <a href="{{ route('service') }}" class="py-2 text-gray-700 hover:text-blue-600">Services</a>
+                <a href="{{ route('contact') }}" class="py-2 text-gray-700 hover:text-blue-600">Contact</a>
+                <a href="{{ route('reservation') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Réserver</a>
+            </nav>
+
+            <!-- Menu burger pour mobile -->
+            <div id="burger-icon" class="md:hidden text-2xl cursor-pointer transition-transform duration-300" onclick="toggleMenu()">☰</div>
         </div>
-        <a href="services.html" class="hover:text-blue-500">Services</a>
-        <a href="contact.html" class="hover:text-blue-500">Contact</a>
-      </nav>
-      <div class="hidden md:flex space-x-4">
-        <a href="#" class="text-gray-600 hover:text-blue-500"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="text-gray-600 hover:text-blue-500"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="text-gray-600 hover:text-blue-500"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="text-gray-600 hover:text-blue-500"><i class="bi bi-linkedin"></i></a>
-      </div>
-      <button class="md:hidden mobile-nav-toggle text-2xl">
-        <i class="bi bi-list"></i>
-      </button>
-    </div>
-  </header>
+    </header>
+
+    <!-- Overlay (Fond semi-transparent pour le menu mobile) -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden transition-opacity duration-300 z-40" onclick="toggleMenu()"></div>
+
+    <!-- Menu mobile (Latéral droit avec animation) -->
+    <div id="mobile-menu"
+        class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg rounded-l-lg transform translate-x-full transition-transform ease-out duration-300 opacity-0 z-50">
+        <button class="absolute top-4 right-6 text-2xl" onclick="toggleMenu()">✖</button>
+        <nav class="flex flex-col mt-16 space-y-6 px-6">
+            <a href="{{ route('home') }}" class="text-gray-700 hover:text-blue-600 text-lg">Accueil</a>
+            <a href="{{ route('chambre') }}" class="text-gray-700 hover:text-blue-600 text-lg">Chambres</a>
+            <a href="{{ route('service') }}" class="text-gray-700 hover:text-blue-600 text-lg">Services</a>
+            <a href="{{ route('contact') }}" class="text-gray-700 hover:text-blue-600 text-lg">Contact</a>
+            <a href="{{ route('reservation') }}" class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-center">Réserver</a>
+        </nav>
+    </div><br><br><br>
 
 <main class="mt-5 px-4">
     <!-- Section Galerie -->
@@ -110,10 +120,58 @@
     </div>
 </main>
 
-  <!-- Footer -->
-  <footer class="bg-white py-4 text-center mt-10 shadow-md">
-    <p class="text-gray-600">&copy; 2025 Bianic Hotel. Tous droits réservés.</p>
-  </footer>
+<!-- Pied de page -->
+<footer class="bg-[#8b7aa2] py-2 text-white">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Informations sur l'hôtel -->
+            <div>
+                <h2 class="text-2xl font-bold mb-4">Habia Residence par <span class="italic">Bianic Hotels</span></h2>
+                <p class="text-lg mb-2">Ewecodji, Grand Popo, Bénin</p>
+                <p class="text-lg mb-2">+229 0159797908</p>
+                <p class="text-lg"><a href="mailto:contact@bianichotels.com" class="hover:underline">contact@bianichotels.com</a></p>
+            </div>
+
+            <!-- Offres -->
+            <div>
+                <h2 class="text-2xl font-bold mb-2">Nos Offres</h2>
+                <ul class="space-y-1 text-lg">
+                    <li><a href="#salon-luxueux" class="hover:underline">Salon luxueux</a></li>
+                    <li><a href="#chambres-luxueuses" class="hover:underline">Chambres luxueuses</a></li>
+                    <li><a href="#piscine" class="hover:underline">Piscine</a></li>
+                    <li><a href="#restaurant" class="hover:underline">Restaurant</a></li>
+                    <li><a href="#chambres-familiales" class="hover:underline">Chambres familiales</a></li>
+                    <li><a href="#plage-privee" class="hover:underline">Plage Privée (bientôt)</a></li>
+                </ul>
+            </div>
+
+            <!-- Réseaux sociaux -->
+            <div class="text-center md:text-left">
+                <h2 class="text-2xl font-bold mb-2">Suivez-nous</h2>
+                <div class="flex justify-center md:justify-start space-x-6">
+                    <a href="https://www.facebook.com/profile.php?id=61553316564448" target="_blank" class="text-blue-600 hover:text-blue-800 text-3xl">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/habia_residence?igsh=eG0yZGx6MXhucXp3" target="_blank" class="text-pink-600 hover:text-pink-800 text-3xl">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@bianichotels?_t=8r0kOCDomyZ&_r=1" target="_blank" class="text-black hover:text-gray-800 text-3xl">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://wa.me/2290159797908" target="_blank" class="text-green-600 hover:text-green-800 text-3xl">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright Section -->
+    <div class="py-2 mt-5 text-center text-white">
+        <p class="text-lg">&copy; 2025 Bianic Hotels. Tous droits réservés.</p>
+    </div>
+</footer>
+
 
   <script>
     function showAlbum(albumName) {
@@ -159,6 +217,50 @@
         document.getElementById("album-content").classList.add("hidden");
     }
 </script>
+    <!-- Intégration FontAwesome pour les icônes -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        setTimeout(() => {
+            const alertBox = document.querySelector('.bg-green-500');
+            if (alertBox) {
+                alertBox.style.transition = 'opacity 0.5s';
+                alertBox.style.opacity = '0';
+                setTimeout(() => alertBox.remove(), 500);
+            }
+        }, 4000);
+    </script>
+
+    <script>
+    function toggleMenu() {
+        const menu = document.getElementById("mobile-menu");
+        const overlay = document.getElementById("overlay");
+        const burgerIcon = document.getElementById("burger-icon");
+
+        // Toggle du menu (slide-in et fondu)
+        menu.classList.toggle("translate-x-full");
+        menu.classList.toggle("opacity-0");
+
+        // Affichage du fond semi-transparent
+        overlay.classList.toggle("hidden");
+
+        // Animation de l’icône burger (rotation)
+        burgerIcon.classList.toggle("rotate-90");
+    }
+</script>
+
+    <script>
+        var map = L.map('map').setView([6.2721625, 1.7893594], 15);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            var marker = L.marker([6.2721625, 1.7893594]).addTo(map)
+                .bindPopup('<a href="https://www.google.com/maps?q=6.2721625,1.7893594" target="_blank">Voir sur Google Maps</a>')
+                .openPopup();
+            
+        </script>
 
 </body>
+
 </html>

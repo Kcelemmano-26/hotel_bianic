@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ReservationController;
+
 
 Route::get('/', function () {
     $directory = public_path('images/chambres/presidentiel');
@@ -38,11 +41,15 @@ Route::get('/services', function(){
 Route::get('/reservation', function () {
     return view('reservation');
 })->name('reservation');
+// Soumettre une réservation
+Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
 
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
-Route::post('/contact', [ContactController::class, 'submitForm']);
+Route::post('/contact', [ContactController::class, 'submitForm'])->name('submitContact');
 
 Route::get('/gallery', [GalleryController::class, 'gallery']);
-Route::get('/gallery', [GalleryController::class, 'galleryImages']);
+Route::get('/gallery', [GalleryController::class, 'galleryImages'])->name('galleryImages');
+
+
