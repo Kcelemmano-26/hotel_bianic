@@ -34,10 +34,12 @@
 
             <!-- Menu de navigation (Desktop) -->
             <nav class="hidden md:flex space-x-6">
-                <a href="{{ route('home') }}" class="py-2 text-gray-700 hover:text-blue-600">Accueil</a>
-                <a href="{{ route('chambre') }}" class="py-2 text-gray-700 hover:text-blue-600">Chambres</a>
-                <a href="{{ route('service') }}" class="py-2 text-gray-700 hover:text-blue-600">Services</a>
-                <a href="{{ route('contact') }}" class="py-2 text-gray-700 hover:text-blue-600">Contact</a>
+            <a href="{{ route('home') }}" class="py-2 text-black hover:text-blue-600">Accueil</a>
+
+            <a href="{{ route('chambre') }}" class="py-2 text-black hover:text-blue-600">Chambres</a>
+                <a href="{{ route('galleryImages') }}" class="py-2 text-black hover:text-blue-600">Galleries</a>
+                <a href="{{ route('service') }}" class="py-2 text-black hover:text-blue-600">Services</a>
+                <a href="{{ route('contact') }}" class="py-2 text-black hover:text-blue-600">Contact</a>
                 <a href="{{ route('reservation') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Réserver</a>
             </nav>
 
@@ -56,6 +58,7 @@
         <nav class="flex flex-col mt-16 space-y-6 px-6">
             <a href="{{ route('home') }}" class="text-gray-700 hover:text-blue-600 text-lg">Accueil</a>
             <a href="{{ route('chambre') }}" class="text-gray-700 hover:text-blue-600 text-lg">Chambres</a>
+            <a href="{{ route('galleryImages') }}" class="py-2 text-gray-700 hover:text-blue-600">Galleries</a>
             <a href="{{ route('service') }}" class="text-gray-700 hover:text-blue-600 text-lg">Services</a>
             <a href="{{ route('contact') }}" class="text-gray-700 hover:text-blue-600 text-lg">Contact</a>
             <a href="{{ route('reservation') }}" class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-center">Réserver</a>
@@ -65,7 +68,7 @@
 <main class="mt-5 px-4">
     <!-- Section Galerie -->
     <section class="text-center my-2">
-        <h2 class="text-4xl font-extrabold text-gray-800">Notre Galerie</h2>
+        <h2 class="text-4xl font-extrabold text-blue-700">Notre Galerie</h2>
         <p class="text-gray-600 mt-2 max-w-2xl mx-auto">
             Découvrez nos magnifiques paysages et installations.
         </p>
